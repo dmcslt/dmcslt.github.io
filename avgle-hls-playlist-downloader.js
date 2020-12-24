@@ -39,11 +39,11 @@
 
 		let str = document.location.toString()
   		let index = str .lastIndexOf("\/")
-  		 filename = str.substring(index + 1, str .length) +".m3u8"
+  		let finalfilename = str.substring(index + 1, str .length) +".m3u8"
 		
 		let a = d.querySelector('.ahpd-download');
 		a.href = URL.createObjectURL(new Blob([playlist],{type:"application/x-mpegURL"}));
-		a.setAttribute("download",filename);
+		a.setAttribute("download",finalfilename);
 		a.classList.remove("ahpd-hide");
 	}
 
