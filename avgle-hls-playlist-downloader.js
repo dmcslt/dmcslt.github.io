@@ -37,7 +37,8 @@
 	function downloadPlaylist(playlist, filename)
 	{
 
-		let str = document.location.toString()
+		let str = window.decodeURI(document.location.toString())
+		
   		let index = str .lastIndexOf("\/")
   		let finalfilename = str.substring(index + 1, str .length) +".m3u8"
 		
