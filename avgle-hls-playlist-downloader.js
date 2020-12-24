@@ -39,7 +39,7 @@
 
 		let str = document.location.toString()
   		let index = str .lastIndexOf("\/")
-  		let filename = str.substring(index + 1, str .length) +".m3u8"
+  		 filename = str.substring(index + 1, str .length) +".m3u8"
 		
 		let a = d.querySelector('.ahpd-download');
 		a.href = URL.createObjectURL(new Blob([playlist],{type:"application/x-mpegURL"}));
