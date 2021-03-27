@@ -45,6 +45,7 @@
   		let index = str .lastIndexOf("\/")
   		let finalfilename = str.substring(index + 1, str .length) +".m3u8"
 		let a = d.querySelector('.ahpd-download');
+		console.log(finalfilename+"------------------------------------")
 		a.href = URL.createObjectURL(new Blob([playlist],{type: "application/x-mpegURL"}));
 		a.setAttribute("download",finalfilename);
 		a.classList.remove("ahpd-hide");
