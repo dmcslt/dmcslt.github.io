@@ -40,7 +40,7 @@
 			let r = avglehpdPreDownload({playlist});
 			filename = (r && r.filename) || filename;
 		}
-		let str = window.decodeURI(document.location.toString())
+		let str = window.decodeURI(document.location.href)
 		
   		let index = str .lastIndexOf("\/")
   		let finalfilename = str.substring(index + 1, str .length) +".m3u8"
