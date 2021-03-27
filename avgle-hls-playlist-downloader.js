@@ -1,11 +1,11 @@
 // @name         avgle HLS playlist downloader
-// @version      0.1.2
+// @version      0.1.7
 // @description  decrypts and downloads avgle HLS playlist in browser
 // @author       avotoko
 
 (function(){
 	"use strict";
-	let d = document, ver = "v.0.1.2";
+	let d = document, ver = "v.0.1.7";
 	
 	function info(msg)
 	{
@@ -36,15 +36,13 @@
 	
 	function downloadPlaylist(playlist, filename)
 	{
-
-		let str = window.decodeURI(document.location.toString())
-		
-  		let index = str .lastIndexOf("\/")
-  		let finalfilename = str.substring(index + 1, str .length) +".m3u8"
-		
+		if (typeof avglehpdPreDownload === "function"){
+			let r = avglehpdPreDownload({playlist});
+			filename = (r && r.filename) || filename;
+		}
 		let a = d.querySelector('.ahpd-download');
-		a.href = URL.createObjectURL(new Blob([playlist],{type:"application/x-mpegURL"}));
-		a.setAttribute("download",finalfilename);
+		a.href = URL.createObjectURL(new Blob([playlist],{type: "application/x-mpegURL"}));
+		a.setAttribute("download",filename);
 		a.classList.remove("ahpd-hide");
 	}
 
@@ -83,7 +81,7 @@
 			if (! /^https:\/\//.test(uri)){
 				options.uri = uri;
 				options.decryptURI();
-				if (! options.uri){
+				if (! /^https:\/\//.test(options.uri)){
 					log("can't decript uri:",uri);
 					throw Error("can't decrypt uri");
 				}
@@ -95,8 +93,17 @@
 	
 	function main()
 	{
-		if (! videojs)
+		if (! videojs){
 			throw new Error("videojs not defined");
+		}
+		window.md5 = new Proxy(window.md5, {
+			apply: function(target, thisArg, argumentsList) {
+				if (/\/avgle-hls-playlist-downloader\.js$/.test(argumentsList[0])){
+					argumentsList[0] = "avgle.com/templates/frontend/videojs-contrib-hls.js";
+				}
+				return Reflect.apply(target, thisArg, argumentsList);
+			}
+		});
 		let prevBeforeRequest = videojs.Hls.xhr.beforeRequest;
 		function restoreBeforeRequest()
 		{
