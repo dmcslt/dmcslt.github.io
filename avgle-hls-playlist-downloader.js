@@ -43,8 +43,9 @@
 		let a = d.querySelector('.ahpd-download');
 		a.href = URL.createObjectURL(new Blob([playlist],{type: "application/x-mpegURL"}));
 		a.setAttribute("download",filename);
+		alert(filename)
 		a.classList.remove("ahpd-hide");
-		console.log(filename+'----------------------------------')
+		
 	}
 
 	function isSegmentUriEncrypted(playlist)
