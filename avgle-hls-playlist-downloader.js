@@ -46,7 +46,7 @@
 
   		let index = str .lastIndexOf("\/")
   		let finalfilename = str.substring(index + 1, str .length) +".m3u8"
-		a.setAttribute("download",finalfilename);
+		a.setAttribute("download",finalfilename.replace(/\s+/g,""););
 		
 		a.classList.remove("ahpd-hide");
 		
